@@ -13,32 +13,32 @@ var socket
 var configuration
 var ua
 
-fetch('http://localhost:3060/api/key').then(response => response.json()).then(state =>{
-  socket = new JsSIP.WebSocketInterface(state.ws);
-  configuration = {
-    sockets: [socket],
-    uri: state.uri,
-    password: state.password,
-    session_timers: false,
-  };
-  console.log(state)
-
-  ua = new JsSIP.UA(configuration);
-  ua.start();
-});
-
-// socket = new JsSIP.WebSocketInterface("wss://sbc03.tel4vn.com:7444");
-
-// configuration = {
+// fetch('http://localhost:3060/api/key').then(response => response.json()).then(state =>{
+//   socket = new JsSIP.WebSocketInterface(state.ws);
+//   configuration = {
 //     sockets: [socket],
-//     uri: "107@2-test1.gcalls.vn:50061",
-//     password: "test1107",
+//     uri: state.uri,
+//     password: state.password,
 //     session_timers: false,
-// };
+//   };
+//   console.log(state)
+
+//   ua = new JsSIP.UA(configuration);
+//   ua.start();
+// });
+
+socket = new JsSIP.WebSocketInterface("wss://sbc03.tel4vn.com:7444");
+
+configuration = {
+    sockets: [socket],
+    uri: "107@2-test1.gcalls.vn:50061",
+    password: "test1107",
+    session_timers: false,
+};
   
 
-// ua = new JsSIP.UA(configuration);
-// ua.start();
+ua = new JsSIP.UA(configuration);
+ua.start();
 
 var pos;
 let duration = 0;
