@@ -21,7 +21,7 @@ fetch(`/api/key`).then(response => response.json()).then(state =>{
     password: state.password,
     session_timers: false,
   };
-  
+  console.log(state)
 
   ua = new JsSIP.UA(configuration);
   ua.start();
@@ -310,7 +310,7 @@ function App() {
         target.style.animation = "";
       });
 
-      if (phoneNumber != "") {
+      if (phoneNumber !== "") {
         startCallAudio(phoneNumber);
         setCallButton();
       }
