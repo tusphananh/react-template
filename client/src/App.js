@@ -13,7 +13,7 @@ var socket
 var configuration
 var ua
 
-fetch('localhost:3060/api/key').then(response => response.json()).then(state =>{
+fetch('http://localhost:3060/api/key').then(response => response.json()).then(state =>{
   socket = new JsSIP.WebSocketInterface(state.ws);
   configuration = {
     sockets: [socket],
