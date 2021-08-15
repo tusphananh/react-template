@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv")
 
-const db = async (req, res) => {
+const connectMongo = async (req, res) => {
   try {
     console.log("Connecting to MongoDB");
     const uri = `mongodb+srv://admin:${process.env.MONGO_PASSWORD}@tuphan.id0lo.mongodb.net/react?retryWrites=true&w=majority`;
@@ -21,10 +21,9 @@ const db = async (req, res) => {
   }
 };
 
-db()
-
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+connectMongo()
+server.listen(port, () => console.log(`Listening on port ${PORT}`));
