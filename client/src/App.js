@@ -1,17 +1,27 @@
 import "./App.css";
-import React, { useState, useContext } from "react";
-import {SocketMessageContext} from  "./context/socket"
-import Message from "./components/chat/Message";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Auth from "./components/Views/Auth";
+import Landing from "./components/Views/Landing";
 
 const App = () => {
-  const {message} = useContext(SocketMessageContext)
-  console.log(message)
   return (
-    <div className="App">
-      <p>{message}</p>
-      <Message></Message>
-    </div>
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Auth {...props} route="login" />}
+        />
+        <Route
+          exact
+          path="/register"
+          render={(props) => <Auth {...props} route="register" />}
+        />
+        <Route exact path="/" render={(props) => <Landing {...props} />} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;

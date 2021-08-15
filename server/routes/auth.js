@@ -6,6 +6,7 @@ const User = require("../models/user");
 const checkValidPhone = require("../utils/checkUser").checkValidPhone;
 const checkValidName = require("../utils/checkUser").checkValidName;
 const checkExistUser = require("../utils/checkUser").checkExistUser;
+
 // @route POST api/auth/login
 // @description Login a user
 // @access PUBLIC
@@ -13,21 +14,18 @@ router.post("/login", async (req, res) => {
   const { phone } = req.body;
   await checkValidPhone(phone, (data) => {
     if (!data.success) {
-      return res.status(400).json({
-        message: data.message,
-      });
+      return res.status(400).json(data);
     }
   });
 
   await checkExistUser(phone, (data) => {
     if (!data.success) {
-      return res.status(400).json({
-        message: data.message,
-      });
+      return res.status(400).json(data);
     }
   });
 
   return res.status(200).json({
+    success: true,
     message: "Need OTP for login success",
   });
 });
@@ -39,25 +37,19 @@ router.post("/register", async (req, res) => {
   const { phone, firstName, lastName } = req.body;
   await checkValidPhone(phone, (data) => {
     if (!data.success) {
-      return res.status(400).json({
-        message: data.message,
-      });
+      return res.status(400).json(data);
     }
   });
 
   await checkValidName(firstName, lastName, (data) => {
     if (!data.success) {
-      return res.status(400).json({
-        message: data.message,
-      });
+      return res.status(400).json(data);
     }
   });
 
   await checkExistUser(phone, (data) => {
     if (data.success) {
-      return res.status(400).json({
-        message: data.message,
-      });
+      return res.status(400).json(data);
     }
   });
 
@@ -65,6 +57,7 @@ router.post("/register", async (req, res) => {
   await newUser.save();
 
   return res.status(200).json({
+    success: true,
     message: "Register Successful",
   });
 });
