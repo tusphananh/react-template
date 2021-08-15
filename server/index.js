@@ -1,13 +1,14 @@
 const express = require("express");
-const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
-require("dotenv")
+require('dotenv').config({path: __dirname + '/.env'})
+
+const authRoute = require("./routes/auth");
 
 const connectMongo = async (req, res) => {
   try {
     console.log("Connecting to MongoDB");
-    const uri = `mongodb+srv://admin:${process.env.MONGO_PASSWORD}@tuphan.id0lo.mongodb.net/react?retryWrites=true&w=majority`;
+    const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.DATABASE_URL}?retryWrites=true&w=majority`;
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -23,7 +24,12 @@ const connectMongo = async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const server = http.createServer(app);
 
+// Start connect to Mongo
 connectMongo()
-server.listen(port, () => console.log(`Listening on port ${PORT}`));
+
+// User Routes here
+app.use(express.json());
+app.use("/api/auth", authRoute);
+
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
