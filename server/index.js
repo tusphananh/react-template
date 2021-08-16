@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 require('dotenv').config({path: __dirname + '/.env'})
 
 const authRoute = require("./routes/auth");
@@ -29,7 +30,9 @@ const app = express();
 connectMongo()
 
 // User Routes here
+app.use(cors())
 app.use(express.json());
 app.use("/api/auth", authRoute);
+app.use(bodyParser.json());
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -19,15 +19,16 @@ router.post("/login", async (req, res) => {
   });
 
   await checkExistUser(phone, (data) => {
-    if (!data.success) {
-      return res.status(400).json(data);
+    if (data.success) {
+      return res.status(200).json({
+        user: data.user.toJSON(),
+        success: true,
+        message: "Need OTP for login success",
+      });
     }
+    return res.status(400).json(data);
   });
 
-  return res.status(200).json({
-    success: true,
-    message: "Need OTP for login success",
-  });
 });
 
 // @router POST api/auth/register

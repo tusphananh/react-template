@@ -7,7 +7,7 @@ module.exports.checkValidPhone = function (phone, callback) {
       message: "Missing phone number",
     });
   }
-  if (phone.length !== 11 && !isNaN(phone)) {
+  if (phone.length !== 10 && !isNaN(phone)) {
     return callback({
       success: false,
       message: "Invalid Phone Number",
@@ -39,6 +39,7 @@ module.exports.checkExistUser = async function (phone, callback) {
     const user = await User.findOne({ phone });
     if (user) {
       return callback({
+        user: user,
         success: true,
         message: "User Exist",
       });
