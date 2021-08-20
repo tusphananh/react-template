@@ -1,4 +1,4 @@
-import {AUTH_TYPE} from "./type";
+import {AUTH_TYPE} from "../constants/type";
 
 export const authReducer = (state, action) => {
   const { type, payload } = action;
