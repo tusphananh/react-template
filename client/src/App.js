@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Auth from "./components/Views/Auth";
 import Landing from "./components/Views/Landing";
-import AuthProvider from "./context/AuthContext";
+import AuthProvider from "./contexts/AuthContext";
 import DashBoard from "./components/Views/DashBoard";
 
 require('dotenv').config({path: __dirname + "../.env"})

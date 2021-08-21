@@ -1,10 +1,10 @@
-import {AUTH_TYPE} from "../constants/type";
+import {AUTH_LOGIN_REQUEST,AUTH_LOGIN_SUCCESS,AUTH_LOGIN_FAILURE,AUTH_LOGOUT_REQUEST,AUTH_LOGOUT_SUCCESS,AUTH_LOGOUT_FAILURE} from "../constants/authType";
 
 export const authReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case AUTH_TYPE.AUTH_LOGIN_REQUEST:
+    case AUTH_LOGIN_REQUEST:
       return {
         ...state,
         token: payload.token,
@@ -13,7 +13,7 @@ export const authReducer = (state, action) => {
         isAuthenticated: false,
         error: null,
       };
-    case AUTH_TYPE.AUTH_LOGIN_SUCCESS:
+    case AUTH_LOGIN_SUCCESS:
       return {
         ...state,
         token: payload.token,
@@ -22,7 +22,7 @@ export const authReducer = (state, action) => {
         isAuthenticated: true,
         error: null,
       };
-    case AUTH_TYPE.AUTH_LOGIN_FAILURE:
+    case AUTH_LOGIN_FAILURE:
       return {
         ...state,
         token: null,
@@ -31,14 +31,14 @@ export const authReducer = (state, action) => {
         isAuthenticated: false,
         error: payload.error,
       };
-    case AUTH_TYPE.AUTH_LOGOUT_REQUEST:
+    case AUTH_LOGOUT_REQUEST:
       return {
         ...state,
         isFetching: true,
         isAuthenticated: false,
         error: null,
       };
-    case AUTH_TYPE.AUTH_LOGOUT_SUCCESS:
+    case AUTH_LOGOUT_SUCCESS:
       return {
         ...state,
         token: payload.token,
@@ -47,7 +47,7 @@ export const authReducer = (state, action) => {
         isAuthenticated: false,
         error: null,
       };
-    case AUTH_TYPE.AUTH_LOGOUT_FAILURE:
+    case AUTH_LOGOUT_FAILURE:
       return {
         ...state,
         isFetching: false,

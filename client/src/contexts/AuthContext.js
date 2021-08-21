@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
+import { authLoginFailure, authLoginSuccess } from "../actions/authActions";
 import { authReducer } from "../reducers/AuthReducer";
-import { AUTH_TYPE } from "../reducers/type";
-const axios = require("axios").default;
+import { requestLogin } from "../apis/auth";
 
 export const AuthContext = React.createContext();
 
@@ -28,33 +28,26 @@ const AuthProvider = (props) => {
   }, [authState.isAuthenticated]);
 
   const login = (phone) => {
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    };
-    const data = { phone: phone };
-    axios
-      .post(`${process.env.REACT_APP_API_HOST}/api/auth/login`, data, {
-        headers: headers,
-      })
+    requestLogin(phone)
       .then((response) => {
         if (response.data.success) {
-          dispatch({
-            type: AUTH_TYPE.AUTH_LOGIN_SUCCESS,
-            payload: { user: response.data.user, token: null },
-          });
+          const payload = {
+            user: response.data.user,
+            token: response.data.token || null,
+          };
+          dispatch(authLoginSuccess(payload));
         } else {
-          dispatch({
-            type: AUTH_TYPE.AUTH_LOGOUT_FAILURE,
-            payload: response.data.error,
-          });
+          const payload = {
+            error: response.data.message,
+          };
+          dispatch(authLoginFailure(payload));
         }
       })
       .catch((error) => {
-        dispatch({
-          type: AUTH_TYPE.AUTH_LOGOUT_FAILURE,
-          payload: error.message,
-        });
+        const payload = {
+          error: error.response.data.message,
+        };
+        dispatch(authLoginFailure(payload));
       });
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function DassBoard(props) {
   const { authState, dispatch, login } = React.useContext(AuthContext);
