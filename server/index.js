@@ -34,5 +34,8 @@ app.use(cors())
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use(bodyParser.json());
+app.get("/", (req, res) => {
+  res.send(400);
+});
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
