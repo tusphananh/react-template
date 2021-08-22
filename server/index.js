@@ -9,6 +9,7 @@ const authRoute = require("./routes/auth");
 const { corsConfigs } = require("./configs/cors");
 const PORT = process.env.PORT || 5000;
 const app = express();
+
 app.set('trust proxy', 1)
 app.use(cors(corsConfigs));
 app.use(cookieParser());
