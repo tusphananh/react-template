@@ -1,4 +1,11 @@
-import {AUTH_LOGIN_REQUEST,AUTH_LOGIN_SUCCESS,AUTH_LOGIN_FAILURE,AUTH_LOGOUT_REQUEST,AUTH_LOGOUT_SUCCESS,AUTH_LOGOUT_FAILURE} from "../constants/authType";
+import {
+  AUTH_LOGIN_REQUEST,
+  AUTH_LOGIN_SUCCESS,
+  AUTH_LOGIN_FAILURE,
+  AUTH_LOGOUT_REQUEST,
+  AUTH_LOGOUT_SUCCESS,
+  AUTH_LOGOUT_FAILURE,
+} from "../constants/authType";
 
 export const authReducer = (state, action) => {
   const { type, payload } = action;
@@ -7,7 +14,6 @@ export const authReducer = (state, action) => {
     case AUTH_LOGIN_REQUEST:
       return {
         ...state,
-        token: payload.token,
         user: null,
         isFetching: true,
         isAuthenticated: false,
@@ -16,7 +22,6 @@ export const authReducer = (state, action) => {
     case AUTH_LOGIN_SUCCESS:
       return {
         ...state,
-        token: payload.token,
         user: payload.user,
         isFetching: false,
         isAuthenticated: true,
@@ -25,7 +30,6 @@ export const authReducer = (state, action) => {
     case AUTH_LOGIN_FAILURE:
       return {
         ...state,
-        token: null,
         user: null,
         isFetching: false,
         isAuthenticated: false,
@@ -41,7 +45,6 @@ export const authReducer = (state, action) => {
     case AUTH_LOGOUT_SUCCESS:
       return {
         ...state,
-        token: payload.token,
         user: null,
         isFetching: false,
         isAuthenticated: false,

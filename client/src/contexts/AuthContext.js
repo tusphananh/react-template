@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 import { authLoginFailure, authLoginSuccess } from "../actions/authActions";
 import { authReducer } from "../reducers/AuthReducer";
-import { requestLogin } from "../apis/auth";
+import { requestDasboard, requestLogin } from "../apis/auth";
 
 export const AuthContext = React.createContext();
 
@@ -18,7 +18,28 @@ const AuthProvider = (props) => {
 
   const [authState, dispatch] = useReducer(authReducer, initialState);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    requestDasboard()
+      .then((response) => {
+        if (response.data.success) {
+          const payload = {
+            user: response.data.user,
+          };
+          dispatch(authLoginSuccess(payload));
+        } else {
+          const payload = {
+            error: response.data.message,
+          };
+          dispatch(authLoginFailure(payload));
+        }
+      })
+      .catch((error) => {
+        const payload = {
+          error: error.response.data.message,
+        };
+        dispatch(authLoginFailure(payload));
+      });
+  }, []);
 
   useEffect(() => {
     if (authState.isAuthenticated) {
@@ -33,7 +54,6 @@ const AuthProvider = (props) => {
         if (response.data.success) {
           const payload = {
             user: response.data.user,
-            token: response.data.token || null,
           };
           dispatch(authLoginSuccess(payload));
         } else {

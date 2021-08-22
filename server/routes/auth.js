@@ -20,6 +20,9 @@ router.post("/login", async (req, res) => {
 
   await checkExistUser(phone, (data) => {
     if (data.success) {
+      const sess = req.session;
+      sess.user = data.user.toJSON();
+
       return res.status(200).json({
         user: data.user.toJSON(),
         success: true,
@@ -28,7 +31,6 @@ router.post("/login", async (req, res) => {
     }
     return res.status(400).json(data);
   });
-
 });
 
 // @router POST api/auth/register
@@ -61,6 +63,25 @@ router.post("/register", async (req, res) => {
     success: true,
     message: "Register Successful",
   });
+});
+
+// @route GET api/auth/dashboard
+// @description show dashboard
+// @access PRIVATE
+router.post("/dashboard", async (req, res) => {
+  const sess = req.session;
+  const user = sess.user;
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "Login Fail",
+    });
+  }
+    return res.status(200).json({
+      success: true,
+      message: "Login sucesful",
+      data: user,
+    });
 });
 
 module.exports = router;

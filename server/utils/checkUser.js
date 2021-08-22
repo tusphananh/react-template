@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-module.exports.checkValidPhone = function (phone, callback) {
+const checkValidPhone = function (phone, callback) {
   if (!phone) {
     return callback({
       success: false,
@@ -20,7 +20,7 @@ module.exports.checkValidPhone = function (phone, callback) {
   });
 };
 
-module.exports.checkValidName = function (firstName, lastName, callback) {
+const checkValidName = function (firstName, lastName, callback) {
   if (!firstName || !lastName) {
     return callback({
       success: false,
@@ -34,7 +34,7 @@ module.exports.checkValidName = function (firstName, lastName, callback) {
   });
 };
 
-module.exports.checkExistUser = async function (phone, callback) {
+const checkExistUser = async function (phone, callback) {
   try {
     const user = await User.findOne({ phone });
     if (user) {
@@ -55,4 +55,10 @@ module.exports.checkExistUser = async function (phone, callback) {
       message: error.message,
     });
   }
+};
+
+module.exports = {
+  checkValidPhone,
+  checkValidName,
+  checkExistUser,
 };

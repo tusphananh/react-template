@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function DassBoard(props) {
-  const { authState, dispatch, login } = React.useContext(AuthContext);
+  const { authState, dispatch } = React.useContext(AuthContext);
   return (
     <div>
       {!authState.isAuthenticated && <Redirect to="/login" />}
