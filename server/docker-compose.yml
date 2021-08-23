@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  node:
+    restart: always
+    build: .
+    ports:
+      - "5000:5000"
+    env_file: .env
+    depends_on:
+      - redis
+    networks:
+      - redis
+  redis:
+    restart: always
+    image: redis:alpine
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    networks:
+      - redis
+
+networks:
+  redis:
+    driver: bridge
