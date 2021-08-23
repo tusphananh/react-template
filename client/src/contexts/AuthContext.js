@@ -12,13 +12,24 @@ const AuthProvider = (props) => {
     isAuthenticated: false,
     user: null,
     error: null,
-    isFetching: false,
+    isFetching: true,
     token: null,
   };
 
   const [authState, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
+
+  }, []);
+
+  useEffect(() => {
+    if (authState.isAuthenticated) {
+      console.log(authState.user);
+      history.push("/dashboard");
+    }
+  }, [authState.isAuthenticated]);
+
+  const authDashboard = () => {
     requestDasboard()
       .then((response) => {
         if (response.data.success) {
@@ -39,14 +50,7 @@ const AuthProvider = (props) => {
         };
         dispatch(authLoginFailure(payload));
       });
-  }, []);
-
-  useEffect(() => {
-    if (authState.isAuthenticated) {
-      console.log(authState.user);
-      history.push("/dashboard");
-    }
-  }, [authState.isAuthenticated]);
+  };
 
   const login = (phone) => {
     requestLogin(phone)
@@ -71,7 +75,7 @@ const AuthProvider = (props) => {
       });
   };
 
-  const authValue = { authState, dispatch, login };
+  const authValue = { authState, dispatch, login ,authDashboard};
 
   return (
     <AuthContext.Provider value={authValue}>
