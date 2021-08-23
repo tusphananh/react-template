@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { connectMongo } = require("./utils/mongo");
-const { redisSession } = require("./utils/redis");
+// const { redisSession } = require("./utils/redis");
+const { mongoSession } = require("./utils/mongoSession");
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/auth");
 const { corsConfigs } = require("./configs/cors");
@@ -19,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Start connect to Mongo
 connectMongo();
 // Start connect to Redis
-app.use(redisSession());
+// app.use(redisSession());
+// Start connect to Mongo Session
+app.use(mongoSession());
 // User Routes here
 app.use(express.json());
 app.use("/api/auth", authRoute);
